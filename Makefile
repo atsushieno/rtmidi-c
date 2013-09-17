@@ -1,9 +1,23 @@
 THISDIR = $(PWD)
+BUILDDIR = $(PWD)/build
 
-all: native
+NATIVE_LIB = $(BUILDDIR)/librtmidi_c.so
+MANAGED_LIB = $(BUILDDIR)/rtmidi-sharp.dll
+
+NATIVE_SOURCES = \
+	rtmidi-c/rtmidi_c.h \
+	rtmidi-c/rtmidi_c.cpp
+
+MANAGED_SOURCES = \
+	rtmidi-sharp.cs
+
+all: native managed
 
 .PHONY:
-native: rtmidi-c/librtmidi_c.so
+native: $(NATIVE_LIB)
+
+.PHONY:
+managed: $(MANAGED_LIB)
 
 configure: rtmidi-2.0.1/configure
 	cd rtmidi-2.0.1 && ./configure --prefix=$(THISDIR)/build && make && make install
@@ -15,6 +29,12 @@ rtmidi-2.0.1/configure: .download-stamp
 	tar zxvf rtmidi-2.0.1.tar.gz
 	touch .download-stamp
 
-rtmidi-c/librtmidi_c.so: .download-stamp
-	cd rtmidi-c && gcc rtmidi_c.cpp ../rtmidi-2.0.1/RtMidi.cpp -lstdc++ 
+$(NATIVE_LIB): .download-stamp $(NATIVE_SOURCES)
+	cd rtmidi-c && gcc rtmidi_c.cpp ../rtmidi-2.0.1/RtMidi.cpp -lstdc++ -fPIC -shared -o $(NATIVE_LIB)
 
+$(MANAGED_LIB): $(MANAGED_SOURCES)
+	mcs $(MANAGED_SOURCES) -t:library -out:$(MANAGED_LIB)
+
+clean:
+	rm -rf $(MANAGED_LIB)
+	rm -rf $(NATIVE_LIB)
