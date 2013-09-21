@@ -4,6 +4,12 @@
 #include "../rtmidi-2.0.1/RtMidi.h"
 
 
+/* misc */
+static int rtmidi_sizeof_rtmidi_api ()
+{
+	return sizeof (RtMidiApi);
+}
+
 /* RtMidi API */
 static int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL argument.
 {

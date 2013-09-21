@@ -9,7 +9,7 @@ NATIVE_SOURCES = \
 	rtmidi-c/rtmidi_c.cpp
 
 MANAGED_SOURCES = \
-	rtmidi-sharp.cs
+	rtmidi-sharp.cs RtMidiPlayer.cs
 
 all: native managed
 
