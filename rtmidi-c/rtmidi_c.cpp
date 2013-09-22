@@ -23,11 +23,11 @@ int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL ar
 			return -1;
 		}
 	} else {
-		std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
 		try {
+			std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
 			RtMidi::getCompiledApi (*v);
 			for (int i = 0; i < v->size (); i++)
-				*apis [i] = (RtMidiApi) v->at (i);
+				(*apis) [i] = (RtMidiApi) v->at (i);
 			delete v;
 			return 0;
 		} catch (...) {

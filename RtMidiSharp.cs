@@ -107,7 +107,7 @@ namespace RtMidiSharp
 			int enumSize = RtMidi.rtmidi_sizeof_rtmidi_api ();
 			IntPtr ptr = IntPtr.Zero;
 			int size = RtMidi.rtmidi_get_compiled_api (ref ptr);
-			ptr = Marshal.AllocHGlobal (size * enumSize); // expecting .NET runtime is not 32bit while librtmidi_c is 64bit...
+			ptr = Marshal.AllocHGlobal (size * enumSize);
 			RtMidi.rtmidi_get_compiled_api (ref ptr);
 			RtMidiApi [] ret = new RtMidiApi [size];
 			switch (enumSize) {
