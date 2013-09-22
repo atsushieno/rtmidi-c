@@ -4,6 +4,10 @@
 #ifndef RTMIDI_C_H
 #define RTMIDI_C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef void* RtMidiPtr;
 typedef void* RtMidiInPtr;
 typedef void* RtMidiOutPtr;
@@ -53,7 +57,10 @@ RtMidiOutPtr rtmidi_out_create_default ();
 RtMidiOutPtr rtmidi_out_create (enum RtMidiApi api, const char *clientName);
 void rtmidi_out_free (RtMidiOutPtr device);
 enum RtMidiApi rtmidi_out_get_current_api (RtMidiPtr device);
-int rtmidi_out_send_message (RtMidiOutPtr device, const char *message);
+int rtmidi_out_send_message (RtMidiOutPtr device, const unsigned char *message, int length);
 
 
+#ifdef __cplusplus
+}
+#endif
 #endif

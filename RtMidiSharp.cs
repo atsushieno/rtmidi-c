@@ -89,10 +89,11 @@ namespace RtMidiSharp
 		[DllImport (RtMidiLibrary)]
 		static extern internal RtMidiApi rtmidi_out_get_current_api (RtMidiPtr device);
 		[DllImport (RtMidiLibrary)]
-		static extern internal int rtmidi_out_send_message (RtMidiOutPtr device, byte [] message);
+		static extern internal int rtmidi_out_send_message (RtMidiOutPtr device, byte [] message, int length);
 	}
 	
 	// Wrapper classes
+
 	public abstract class RtMidiDevice : IDisposable
 	{
 		// no idea when to use it...
@@ -264,7 +265,9 @@ namespace RtMidiSharp
 		
 		public void SendMessage (byte [] message)
 		{
-			RtMidi.rtmidi_out_send_message (Handle, message);
+			if (message == null)
+				throw new ArgumentNullException ("message");
+			RtMidi.rtmidi_out_send_message (Handle, message, message.Length);
 		}
 	}
 }

@@ -3,7 +3,6 @@
 #include "rtmidi_c.h"
 #include "../rtmidi-2.0.1/RtMidi.h"
 
-
 /* misc */
 static int rtmidi_sizeof_rtmidi_api ()
 {
@@ -176,4 +175,3 @@ int rtmidi_out_send_message (RtMidiOutPtr device, const unsigned char *message, 
 		return -1;
 	}
 }
-
