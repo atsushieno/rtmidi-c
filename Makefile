@@ -33,7 +33,7 @@ $(NATIVE_LIB): .download-stamp $(NATIVE_SOURCES)
 	cd rtmidi-c && gcc -g rtmidi_c.cpp ../rtmidi-2.0.1/RtMidi.cpp -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
 
 $(MANAGED_LIB): $(MANAGED_SOURCES)
-	mcs $(MANAGED_SOURCES) -t:library -out:$(MANAGED_LIB)
+	mcs -debug $(MANAGED_SOURCES) -t:library -out:$(MANAGED_LIB)
 
 clean:
 	rm -rf $(MANAGED_LIB)

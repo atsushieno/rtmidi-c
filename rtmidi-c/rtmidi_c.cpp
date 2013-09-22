@@ -12,7 +12,7 @@ int rtmidi_sizeof_rtmidi_api ()
 /* RtMidi API */
 int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL argument.
 {
-	if (!apis) {
+	if (!apis || !(*apis)) {
 		std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
 		try {
 			RtMidi::getCompiledApi (*v);

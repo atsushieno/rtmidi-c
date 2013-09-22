@@ -111,25 +111,25 @@ namespace RtMidiSharp
 			RtMidi.rtmidi_get_compiled_api (ref ptr);
 			RtMidiApi [] ret = new RtMidiApi [size];
 			switch (enumSize) {
-			case 8:
+			case 1:
 				byte [] bytes = new byte [size];
 				Marshal.Copy (ptr, bytes, 0, bytes.Length);
 				for (int i = 0; i < bytes.Length; i++)
 					ret [i] = (RtMidiApi) bytes [i];
 				break;
-			case 16:
+			case 2:
 				short [] shorts = new short [size];
 				Marshal.Copy (ptr, shorts, 0, shorts.Length);
 				for (int i = 0; i < shorts.Length; i++)
 					ret [i] = (RtMidiApi) shorts [i];
 				break;
-			case 32:
+			case 4:
 				int [] ints = new int [size];
 				Marshal.Copy (ptr, ints, 0, ints.Length);
 				for (int i = 0; i < ints.Length; i++)
 					ret [i] = (RtMidiApi) ints [i];
 				break;
-			case 64:
+			case 8:
 				long [] longs = new long [size];
 				Marshal.Copy (ptr, longs, 0, longs.Length);
 				for (int i = 0; i < longs.Length; i++)
