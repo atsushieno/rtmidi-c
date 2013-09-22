@@ -30,11 +30,11 @@ enum RtMidiErrorType {
 
 typedef void(* RtMidiCCallback) (double timeStamp, const unsigned char* message, void *userData);
 
-static int rtmidi_sizeof_rtmidi_api ();
+int rtmidi_sizeof_rtmidi_api ();
 
 /* RtMidi API */
-static int rtmidi_get_compiled_api (enum RtMidiApi **apis); // return length for NULL argument.
-static void rtmidi_error (enum RtMidiErrorType type, const char* errorString);
+int rtmidi_get_compiled_api (enum RtMidiApi **apis); // return length for NULL argument.
+void rtmidi_error (enum RtMidiErrorType type, const char* errorString);
 
 void rtmidi_open_port (RtMidiPtr device, unsigned int portNumber, const char *portName);
 void rtmidi_open_virtual_port (RtMidiPtr device, const char *portName);

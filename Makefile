@@ -30,7 +30,7 @@ rtmidi-2.0.1/configure: .download-stamp
 	touch .download-stamp
 
 $(NATIVE_LIB): .download-stamp $(NATIVE_SOURCES)
-	cd rtmidi-c && gcc rtmidi_c.cpp ../rtmidi-2.0.1/RtMidi.cpp -lstdc++ -fPIC -shared -o $(NATIVE_LIB)
+	cd rtmidi-c && gcc -g rtmidi_c.cpp ../rtmidi-2.0.1/RtMidi.cpp -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
 
 $(MANAGED_LIB): $(MANAGED_SOURCES)
 	mcs $(MANAGED_SOURCES) -t:library -out:$(MANAGED_LIB)

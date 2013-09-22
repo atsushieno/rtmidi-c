@@ -4,13 +4,13 @@
 #include "../rtmidi-2.0.1/RtMidi.h"
 
 /* misc */
-static int rtmidi_sizeof_rtmidi_api ()
+int rtmidi_sizeof_rtmidi_api ()
 {
 	return sizeof (RtMidiApi);
 }
 
 /* RtMidi API */
-static int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL argument.
+int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL argument.
 {
 	if (!apis) {
 		std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
@@ -36,7 +36,7 @@ static int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for 
 	}
 }
 
-static void rtmidi_error (enum RtMidiErrorType type, const char* errorString)
+void rtmidi_error (enum RtMidiErrorType type, const char* errorString)
 {
 	std::string msg = errorString;
 	RtMidi::error ((RtError::Type) type, msg);
