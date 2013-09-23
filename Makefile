@@ -34,9 +34,10 @@ rtmidi-2.0.1/configure: .download-stamp
 	touch .download-stamp
 
 $(NATIVE_LIB): $(NATIVE_OBJ) $(RTMIDI_LIB) 
+	mkdir -p build
 	gcc -g $(NATIVE_OBJ) $(RTMIDI_LIB) -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
 
-$(NATIVE_OBJ): $(NATIVE_SOURCES)
+$(NATIVE_OBJ): $(NATIVE_SOURCES) .download-stamp
 	cd rtmidi-c && gcc -g -c -fPIC rtmidi_c.cpp
 
 $(RTMIDI_LIB): .download-stamp
