@@ -1,5 +1,5 @@
-rtmidi-sharp
-============
+rtmidi-C
+========
 
 C port to rtmidi C++ library, to make it usable with .NET P/Invoke.
 
