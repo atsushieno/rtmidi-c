@@ -17,7 +17,7 @@ all: native
 native: $(NATIVE_LIB)
 
 configure: rtmidi-2.0.1/configure
-	cd rtmidi-2.0.1 && ./configure --prefix=$(THISDIR)/build && make && make install
+	cd rtmidi-2.0.1 && ./configure --with-alsa --prefix=$(THISDIR)/build && make && make install
 
 rtmidi-2.0.1/configure: .download-stamp
 
@@ -28,7 +28,7 @@ rtmidi-2.0.1/configure: .download-stamp
 
 $(NATIVE_LIB): $(NATIVE_OBJ) $(RTMIDI_LIB) 
 	mkdir -p build
-	gcc -g $(NATIVE_OBJ) $(RTMIDI_LIB) -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
+	gcc -g $(NATIVE_OBJ) $(RTMIDI_LIB) -lasound -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
 
 $(NATIVE_OBJ): $(NATIVE_SOURCES) .download-stamp
 	cd rtmidi-c && gcc -g -c -fPIC rtmidi_c.cpp
