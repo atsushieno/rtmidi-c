@@ -4,7 +4,6 @@ RTMIDI_DIR = rtmidi-2.0.1
 
 NATIVE_LIB = $(BUILDDIR)/librtmidi_c.so
 RTMIDI_LIB = $(RTMIDI_DIR)/librtmidi.a
-MANAGED_LIB = $(BUILDDIR)/rtmidi-sharp.dll
 
 NATIVE_SOURCES = \
 	rtmidi-c/rtmidi_c.h \
@@ -12,16 +11,10 @@ NATIVE_SOURCES = \
 
 NATIVE_OBJ = rtmidi-c/rtmidi_c.o
 
-MANAGED_SOURCES = \
-	RtMidiSharp.cs
-
-all: native managed
+all: native
 
 .PHONY:
 native: $(NATIVE_LIB)
-
-.PHONY:
-managed: $(MANAGED_LIB)
 
 configure: rtmidi-2.0.1/configure
 	cd rtmidi-2.0.1 && ./configure --prefix=$(THISDIR)/build && make && make install
@@ -42,11 +35,7 @@ $(NATIVE_OBJ): $(NATIVE_SOURCES)
 $(RTMIDI_LIB): .download-stamp
 	cd rtmidi-2.0.1 && ./configure && make || exit 1
 
-$(MANAGED_LIB): $(MANAGED_SOURCES)
-	mcs -debug $(MANAGED_SOURCES) -t:library -out:$(MANAGED_LIB)
-
 clean:
-	rm -rf $(MANAGED_LIB)
 	rm -rf $(RTMIDI_LIB)
 	rm -rf $(NATIVE_LIB)
 	rm -rf $(NATIVE_OBJ)

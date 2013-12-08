@@ -1,8 +1,6 @@
 rtmidi-sharp
 ============
 
-C and C# binding to rtmidi C++ library
+C port to rtmidi C++ library, to make it usable with .NET P/Invoke.
 
-I have never used it, even a single API to run it.
-It just compiles and that's all so far.
-
+(Windows build should be added. So far the build requires gcc.)
