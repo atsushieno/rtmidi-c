@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "rtmidi_c.h"
-#include "../rtmidi-2.0.1/RtMidi.h"
+#include "../external/rtmidi/RtMidi.h"
 
 /* misc */
 int rtmidi_sizeof_rtmidi_api ()
@@ -36,10 +36,10 @@ int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL ar
 	}
 }
 
-void rtmidi_error (enum RtMidiErrorType type, const char* errorString)
+void rtmidi_error (MidiApi *api, enum RtMidiErrorType type, const char* errorString)
 {
 	std::string msg = errorString;
-	RtMidi::error ((RtError::Type) type, msg);
+	api->error ((RtMidiError::Type) type, msg);
 }
 
 void rtmidi_open_port (RtMidiPtr device, unsigned int portNumber, const char *portName)

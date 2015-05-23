@@ -1,42 +1,39 @@
 THISDIR = $(PWD)
 BUILDDIR = $(PWD)/build
-RTMIDI_DIR = rtmidi-2.0.1
+RTMIDI_DIR = external/rtmidi
 
-NATIVE_LIB = $(BUILDDIR)/librtmidi_c.so
-RTMIDI_LIB = $(RTMIDI_DIR)/librtmidi.a
+RTMIDI_C_INC = $(BUILDDIR)/include/rtmidi_c.h
+RTMIDI_C_LIB = $(BUILDDIR)/lib/librtmidi_c.so
+RTMIDI_LIB = $(RTMIDI_DIR)/.libs/librtmidi.a
+RTMIDI_C_INC_SRC = rtmidi-c/rtmidi_c.h
 
 NATIVE_SOURCES = \
-	rtmidi-c/rtmidi_c.h \
+	$(RTMIDI_C_INC_SRC) \
 	rtmidi-c/rtmidi_c.cpp
+
+RTMIDI_C_INC_SRC = \
+	rtmidi-c/rtmidi_c.h
 
 NATIVE_OBJ = rtmidi-c/rtmidi_c.o
 
-all: native
+all: $(RTMIDI_C_LIB) $(RTMIDI_C_INC)
 
-.PHONY:
-native: $(NATIVE_LIB)
+$(RTMIDI_C_INC): 
+	mkdir -p build/include
+	cp $(RTMIDI_C_INC_SRC) $(RTMIDI_C_INC)
 
-configure: rtmidi-2.0.1/configure
-	cd rtmidi-2.0.1 && ./configure --with-alsa --prefix=$(THISDIR)/build && make && make install
+$(RTMIDI_C_LIB): $(NATIVE_OBJ) $(RTMIDI_LIB) 
+	mkdir -p build/lib
+	gcc -g $(NATIVE_OBJ) $(RTMIDI_LIB) -lasound -lstdc++ -fPIC -shared -Wl,-soname,$(RTMIDI_C_LIB) -o $(RTMIDI_C_LIB)
 
-rtmidi-2.0.1/configure: .download-stamp
-
-.download-stamp:
-	wget http://www.music.mcgill.ca/~gary/rtmidi/release/rtmidi-2.0.1.tar.gz
-	tar zxvf rtmidi-2.0.1.tar.gz
-	touch .download-stamp
-
-$(NATIVE_LIB): $(NATIVE_OBJ) $(RTMIDI_LIB) 
-	mkdir -p build
-	gcc -g $(NATIVE_OBJ) $(RTMIDI_LIB) -lasound -lstdc++ -fPIC -shared -Wl,-soname,$(NATIVE_LIB) -o $(NATIVE_LIB)
-
-$(NATIVE_OBJ): $(NATIVE_SOURCES) .download-stamp
+$(NATIVE_OBJ): $(NATIVE_SOURCES)
 	cd rtmidi-c && gcc -g -c -fPIC rtmidi_c.cpp
 
-$(RTMIDI_LIB): .download-stamp
-	cd rtmidi-2.0.1 && ./configure && make || exit 1
+$(RTMIDI_LIB):
+	cp autogen.sh $(RTMIDI_DIR) && cd $(RTMIDI_DIR) && CPPFLAGS=-fPIC ./autogen.sh && make || exit 1
 
 clean:
 	rm -rf $(RTMIDI_LIB)
-	rm -rf $(NATIVE_LIB)
+	rm -rf $(RTMIDI_C_LIB)
+	rm -rf $(RTMIDI_C_INC)
 	rm -rf $(NATIVE_OBJ)
