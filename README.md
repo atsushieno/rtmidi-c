@@ -1,4 +1,4 @@
-I'm deprecating this project. I created rtmidi fork that adds almost the same C API instead (to bring build back system sanity). See https://github.com/atsushieno/rtmidi .
+<del>I'm deprecating this project. I created rtmidi fork that adds almost the same C API instead (to bring build back system sanity). See https://github.com/atsushieno/rtmidi .</del> Thanks to rtmidi hackers, my changes are even merged there.
 
 ----
 
